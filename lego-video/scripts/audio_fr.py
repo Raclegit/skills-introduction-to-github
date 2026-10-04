@@ -92,10 +92,10 @@ wr('music_fr.wav', m)
 
 # ---- voice-over (deep): (start time, text, espeak speed)
 SLOT = [1.9, 3.3, 1.9, 1.9, 1.9, 2.1, 4.2]
-VO = [(0.35, "Légo, maïndsète !", 150), (2.9, "Construisez votre propre aventure galactique !", 150),
-      (6.35, "Revis les scènes du Mandalorian !", 150), (8.35, "Ouvre, pilote, tire !", 150),
-      (10.35, "Crée ton marché de ferraille !", 150), (12.35, "Le cadeau des fans, dès quatorze ans !", 150),
-      (14.75, "Ça vaut le coup ? Lien en description, likez et abonnez-vous !", 155)]
+VO = [(0.35, "Légo, maïndsète !", 140), (2.9, "Construisez votre propre aventure galactique !", 140),
+      (6.35, "Revis les scènes du Mandalorian !", 140), (8.35, "Ouvre, pilote, tire !", 140),
+      (10.35, "Crée ton marché de ferraille !", 140), (12.35, "Le cadeau des fans, dès quatorze ans !", 140),
+      (14.75, "Ça vaut le coup ? Lien en description, likez et abonnez-vous !", 145)]
 inputs, fl, outs = [], [], []
 for i, (t0, txt, sp) in enumerate(VO):
     subprocess.run(['espeak-ng', '-v', 'mb-fr4', '-p', '72', '-s', str(sp), '-w', f'vofr{i}.wav', txt], check=True)
@@ -104,7 +104,7 @@ for i, (t0, txt, sp) in enumerate(VO):
     print(i, txt, 'start', t0, 'end~', round(t0 + d / A, 2))
     inputs += ['-i', f'vofr{i}.wav']
     # brighter, friendlier: slight pitch lift, presence boost, short room
-    fl.append(f"[{i+2}:a]aresample=44100,asetrate=44100*1.08,aresample=44100,atempo={min(2.0, A * 1.08):.3f},"
+    fl.append(f"[{i+2}:a]aresample=44100,asetrate=44100*1.08,aresample=44100,atempo={max(0.5, A / 1.08):.3f},"
               f"highpass=f=140,equalizer=f=3000:t=q:w=1:g=4,aecho=0.8:0.5:30:0.2,volume=3.2,adelay={int(t0*1000)}|{int(t0*1000)}[v{i}]")
     outs.append(f"[v{i}]")
 fg = ";".join(fl) + f";{''.join(outs)}amix=inputs={len(VO)}:normalize=0,apad=whole_dur=19[vo];" \
