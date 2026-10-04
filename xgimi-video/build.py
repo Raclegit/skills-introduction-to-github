@@ -40,7 +40,13 @@ for i,sc in enumerate(scenes):
     parts.append(out)
 open("list.txt","w").write("".join(f"file '{p}'\n" for p in parts))
 total=sum(s[0] for s in scenes)
-subprocess.run(["ffmpeg","-y","-loglevel","error","-f","concat","-i","list.txt","-c","copy","video_only.mp4"],check=True)
+LINK="geni.us/KOSecnr"
+open("linkbar1.txt","w").write(f"XGIMI Horizon 20 Max:  {LINK}")
+open("linkbar2.txt","w").write("Affiliate link - no extra cost to you")
+bar=(f"drawbox=x=0:y=ih-130:w=iw:h=100:color=black@0.6:t=fill:enable='gte(t,0.5)',"
+     f"drawtext=fontfile={F}:textfile=linkbar1.txt:expansion=none:fontsize=46:fontcolor=white:x=(w-text_w)/2:y=h-122:enable='gte(t,0.5)',"
+     f"drawtext=fontfile={F}:textfile=linkbar2.txt:expansion=none:fontsize=28:fontcolor=0xffb703:x=(w-text_w)/2:y=h-66:enable='gte(t,0.5)'")
+subprocess.run(["ffmpeg","-y","-loglevel","error","-f","concat","-i","list.txt","-vf",bar,"-c:v","libx264","-preset","veryfast","-crf","20","-pix_fmt","yuv420p","video_only.mp4"],check=True)
 # synth beat: kick every 0.5s + hat on offbeats
 expr="0.6*sin(2*PI*(55+80*exp(-30*mod(t,0.5)))*t)*exp(-7*mod(t,0.5))+0.12*(random(0)-0.5)*exp(-40*mod(t+0.25,0.5))"
 subprocess.run(["ffmpeg","-y","-loglevel","error","-f","lavfi","-i",f"aevalsrc='{expr}':s=44100:d={total}",

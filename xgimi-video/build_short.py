@@ -38,7 +38,13 @@ for i,(d,bg,big,small,acc,prod) in enumerate(scenes):
     parts.append(out)
 open("vlist.txt","w").write("".join(f"file '{p}'\n" for p in parts))
 total=sum(s[0] for s in scenes)
-subprocess.run(["ffmpeg","-y","-loglevel","error","-f","concat","-i","vlist.txt","-c","copy","vvideo_only.mp4"],check=True)
+LINK="geni.us/KOSecnr"
+open("vlink1.txt","w").write(LINK)
+open("vlink2.txt","w").write("Affiliate link - no extra cost to you")
+bar=(f"drawbox=x=0:y=130:w=iw:h=130:color=black@0.6:t=fill:enable='gte(t,0.5)',"
+     f"drawtext=fontfile={F}:textfile=vlink1.txt:expansion=none:fontsize=60:fontcolor=white:x=(w-text_w)/2:y=145:enable='gte(t,0.5)',"
+     f"drawtext=fontfile={F}:textfile=vlink2.txt:expansion=none:fontsize=30:fontcolor=0xffb703:x=(w-text_w)/2:y=222:enable='gte(t,0.5)'")
+subprocess.run(["ffmpeg","-y","-loglevel","error","-f","concat","-i","vlist.txt","-vf",bar,"-c:v","libx264","-preset","veryfast","-crf","20","-pix_fmt","yuv420p","vvideo_only.mp4"],check=True)
 expr="0.6*sin(2*PI*(55+80*exp(-30*mod(t,0.4)))*t)*exp(-8*mod(t,0.4))+0.12*(random(0)-0.5)*exp(-40*mod(t+0.2,0.4))"
 subprocess.run(["ffmpeg","-y","-loglevel","error","-f","lavfi","-i",f"aevalsrc='{expr}':s=44100:d={total}",
   "-i","vvideo_only.mp4","-filter_complex",f"[0:a]afade=t=out:st={total-0.8}:d=0.8,volume=0.9[a]",
