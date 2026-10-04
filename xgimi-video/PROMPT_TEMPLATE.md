@@ -1,5 +1,38 @@
 # Prompt template: horizontal + vertical promo videos
 
+## Avant de commencer : régler l'accès GitHub (une seule fois)
+
+### 1) Connecter votre compte GitHub à Claude
+1. Ouvrez https://claude.ai/connect-github et cliquez sur **Connect** (ou **Reconnect**).
+2. Acceptez les autorisations demandées.
+
+C'est bon quand la page des connecteurs de Claude affiche « Compte GitHub connecté » en vert.
+
+### 2) Installer l'app Claude GitHub sur le bon dépôt
+Le compte connecté ne suffit pas : l'app doit aussi être autorisée sur le dépôt.
+1. Ouvrez https://github.com/apps/claude/installations/select_target.
+2. Choisissez votre compte.
+3. Dans « Repository access », choisissez **Only select repositories**, puis cochez le dépôt voulu.
+4. Cliquez sur **Install** (ou **Save** si l'app est déjà installée).
+
+À chaque nouveau dépôt, revenez ajouter ce dépôt à la liste de l'app.
+
+### 3) Vérifier avant de commencer
+- Sur https://github.com/settings/installations, **Claude** doit apparaître, avec votre dépôt dans ses dépôts autorisés.
+- Sur la page des connecteurs de Claude, « Application Claude GitHub » doit afficher votre compte avec la mention « Installé ».
+
+### 4) Démarrer la session sur le bon dépôt
+1. Dans Claude Code, créez une **nouvelle session** en sélectionnant le dépôt dans la liste.
+2. Le dépôt est attaché au démarrage. Si vous changez l'accès pendant une session, cela peut fonctionner tout de suite. Si le push est refusé malgré tout, ouvrez une nouvelle session.
+
+### Si le push échoue (erreur 403)
+Le message dit « Claude doesn't have GitHub access ». Reprenez dans l'ordre : l'étape 2, puis l'étape 1, puis une nouvelle session.
+
+### Bon à savoir
+- **Dépôt privé ou public :** si les vidéos ne doivent pas être visibles par tous, créez un dépôt **privé** avant l'étape 2.
+- **Dépôt d'une organisation :** un propriétaire de l'organisation doit installer l'app.
+- L'app ne sert qu'aux sessions Claude Code dans le cloud, pas à celles lancées sur votre ordinateur.
+
 Copy the block below into a new session, fill in the `[brackets]`, and attach the image files.
 
 ```
