@@ -98,12 +98,12 @@ VO = [(0.35, "Lego mindset.", 120), (2.9, "Build your own galactic adventure.", 
       (14.75, "Worth it? Link in description. Like and subscribe.", 140)]
 inputs, fl, outs = [], [], []
 for i, (t0, txt, sp) in enumerate(VO):
-    subprocess.run(['espeak-ng', '-v', 'en-us+m3', '-p', '5', '-s', str(sp+60), '-g', '1', '-w', f'vo{i}.wav', txt], check=True)
+    subprocess.run(['espeak-ng', '-v', 'en-us+m3', '-p', '0', '-s', str(sp+60), '-g', '1', '-w', f'vo{i}.wav', txt], check=True)
     d = float(subprocess.check_output(['ffprobe', '-v', 'error', '-show_entries', 'format=duration', '-of', 'csv=p=0', f'vo{i}.wav']))
-    print(i, txt, 'start', t0, 'end~', round(t0 + d*1.25/min(2.0, max(1.5, d*1.25/SLOT[i])), 2))
+    print(i, txt, 'start', t0, 'end~', round(t0 + d*1.43/min(2.0, max(1.72, d*1.43/SLOT[i])), 2))
     inputs += ['-i', f'vo{i}.wav']
     # deepen: pitch down ~ -4 semitones keeping tempo, bass boost, little reverb
-    fl.append(f"[{i+2}:a]aresample=44100,asetrate=44100*0.80,aresample=44100,atempo={min(2.0, max(1.5, d*1.25/SLOT[i])):.3f},"
+    fl.append(f"[{i+2}:a]aresample=44100,asetrate=44100*0.70,aresample=44100,atempo={min(2.0, max(1.72, d*1.43/SLOT[i])):.3f},"
               f"equalizer=f=120:t=q:w=1:g=8,lowpass=f=4500,aecho=0.8:0.6:45|90:0.3|0.2,volume=3.0,adelay={int(t0*1000)}|{int(t0*1000)}[v{i}]")
     outs.append(f"[v{i}]")
 fg = ";".join(fl) + f";{''.join(outs)}amix=inputs={len(VO)}:normalize=0,apad=whole_dur=19[vo];" \
